@@ -1,5 +1,5 @@
-import { AppDataSource } from "../data-source";
-import { Hero } from "../models/interfaces/HeroInterface";
+import { AppDataSource } from '../data-source';
+import { Hero } from '../models/interfaces/HeroInterface';
 
 /**
  * Le role du service est d'aller chercher les données,
@@ -11,13 +11,12 @@ export class HeroService {
   }
 
   getOneHeroById(id: number): Promise<Hero> {
-    return AppDataSource.query(`select hero from hero where hero.id = ${id};`);
+    return AppDataSource.query(`SELECT * from hero WHERE hero.id=${id};`);
   }
 
   createNewHero(newHero: Hero): Promise<any> {
-    console.log(newHero);
     return AppDataSource.query(
-      `insert into hero (name,power,life,id_type_weapon) values (${newHero.name}, ${newHero.power}, ${newHero.life},${newHero.id_type_weapon})`
+      `INSERT INTO hero (name, power, life,id_type_weapon) VALUES ('${newHero.name}', ${newHero.power}, ${newHero.life},${newHero.id_type_weapon});`
     );
   }
 
@@ -27,7 +26,7 @@ export class HeroService {
 SET name= '${changes.name}',
     power= ${changes.power},
     life= ${changes.life}
-WHERE id = ${id}`);
+WHERE hero.id=${id};`);
   }
 
   deleteOneHero(id: number): Promise<any> {

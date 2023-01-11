@@ -1,6 +1,6 @@
-import { Request, Response } from "express";
-import { Hero } from "../models/interfaces/HeroInterface";
-import { HeroService } from "../services/HeroService";
+import { Request, Response } from 'express';
+import { Hero } from '../models/interfaces/HeroInterface';
+import { HeroService } from '../services/HeroService';
 
 /**
  * Le role du controlleur est de gérer les requêtes,
@@ -13,11 +13,11 @@ export class HeroController {
   async getAllHeros(req: Request, res: Response): Promise<void> {
     try {
       const allHeros = await this.heroService.getAllHeros();
-      res.send({ status: "OK", data: allHeros });
+      res.send({ status: 'OK', data: allHeros });
     } catch (error: any) {
       res
         .status(error?.status || 500)
-        .send({ status: "FAILED", data: { error: error?.message || error } });
+        .send({ status: 'FAILED', data: { error: error?.message || error } });
     }
   }
 
@@ -25,7 +25,7 @@ export class HeroController {
     const paramId = req.params.id;
     if (!paramId) {
       res.status(400).send({
-        status: "FAILED",
+        status: 'FAILED',
         data: { error: "Parameter 'id' can not be empty" },
       });
       return;
@@ -33,11 +33,11 @@ export class HeroController {
     try {
       const id = parseInt(paramId);
       const oneHero = await this.heroService.getOneHeroById(id);
-      res.send({ status: "OK", data: oneHero });
+      res.send({ status: 'OK', data: oneHero });
     } catch (error: any) {
       res
         .status(error?.status || 500)
-        .send({ status: "FAILED", data: { error: error?.message || error } });
+        .send({ status: 'FAILED', data: { error: error?.message || error } });
     }
   }
 
@@ -52,7 +52,7 @@ export class HeroController {
       newHero.life === undefined
     ) {
       res.status(400).send({
-        status: "FAILED",
+        status: 'FAILED',
         data: {
           error:
             "One of the following keys is missing or is empty in request body: 'name', 'power', 'life'",
@@ -64,13 +64,13 @@ export class HeroController {
     try {
       await this.heroService.createNewHero(newHero);
       res.status(201).send({
-        status: "OK",
+        status: 'OK',
         message: `New hero created`,
       });
     } catch (error: any) {
       res
         .status(error?.status || 500)
-        .send({ status: "FAILED", data: { error: error?.message || error } });
+        .send({ status: 'FAILED', data: { error: error?.message || error } });
     }
   }
 
@@ -81,13 +81,13 @@ export class HeroController {
     const paramId = req.params.id;
     if (!paramId) {
       res.status(400).send({
-        status: "FAILED",
+        status: 'FAILED',
         data: { error: "Parameter 'id' can not be empty" },
       });
       return;
     } else if (!changes.name || !changes.power || !changes.life) {
       res.status(400).send({
-        status: "FAILED",
+        status: 'FAILED',
         data: {
           error:
             "One of the following keys is missing or is empty in request body: 'name', 'power', 'life'",
@@ -100,13 +100,13 @@ export class HeroController {
       const id = parseInt(paramId);
       await this.heroService.updateOneHero(id, changes);
       res.status(201).send({
-        status: "OK",
+        status: 'OK',
         message: `Hero with id ${id} updated`,
       });
     } catch (error: any) {
       res
         .status(error?.status || 500)
-        .send({ status: "FAILED", data: { error: error?.message || error } });
+        .send({ status: 'FAILED', data: { error: error?.message || error } });
     }
   }
 
@@ -114,7 +114,7 @@ export class HeroController {
     const paramId = req.params.id;
     if (!paramId) {
       res.status(400).send({
-        status: "FAILED",
+        status: 'FAILED',
         data: { error: "Parameter 'id' can not be empty" },
       });
       return;
@@ -125,11 +125,11 @@ export class HeroController {
       await this.heroService.deleteOneHero(id);
       res
         .status(200)
-        .send({ status: "OK", message: `Hero with id ${id} removed` });
+        .send({ status: 'OK', message: `Hero with id ${id} removed` });
     } catch (error: any) {
       res
         .status(error?.status || 500)
-        .send({ status: "FAILED", data: { error: error?.message || error } });
+        .send({ status: 'FAILED', data: { error: error?.message || error } });
     }
   }
 }
